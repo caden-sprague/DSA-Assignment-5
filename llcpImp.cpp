@@ -31,7 +31,7 @@ void BuildDistinctMirrorPairs (Node*& head)
             // remove it from head list 
             runner->link = runner->link->link;
 
-            // checking if duplicates ( recycle bin ) containts theDuplicate->data
+            // checking if recycle bin containts theDuplicate->data
             Node* duplicatesIterator = duplicates;
             while(duplicatesIterator != 0)
             {
@@ -45,12 +45,14 @@ void BuildDistinctMirrorPairs (Node*& head)
                }
             }
 
-            if (duplicatesIterator != 0) {
+            if (duplicatesIterator != 0) 
+            {
                // add to duplicates list
                theDuplicate->link = duplicates;
                duplicates = theDuplicate; 
             }
-            else {
+            else 
+            {
                // or trash it
                delete theDuplicate;
             }
@@ -64,8 +66,7 @@ void BuildDistinctMirrorPairs (Node*& head)
       current = current->link;
    }
 
-   // Step 2: mirror section
-
+   // Step 2: Mirror Section
    int headLength = 1;
    Node* last = head;      
 
@@ -91,11 +92,14 @@ void BuildDistinctMirrorPairs (Node*& head)
 
       // runner = the node we are wanting to copy in mirror section
 
-      // duplicates is basically a recycle bin now that we are checking to see if we can steal from
-      // if duplicates is empty or duplicates contain the data we are looking for
+      // duplicates is basically a recycle bin now that we are checking 
+      //    to see if we can steal from
+      // if duplicates is empty or duplicates contain the data we are 
+      //    looking for
       if(duplicates != 0 && duplicates->data == runner->data)
       {
-         // set the last node of LL to duplicate and reset last = to duplicate
+         // set the last node of LL to duplicate
+         // reset last = to duplicate
          last->link = duplicates;
          last = last -> link;
 
@@ -365,3 +369,4 @@ void ListClear(Node*& headPtr, int noMsg)
         << endl;
 }
 //////////////////////////////////////////////////////////////////
+
