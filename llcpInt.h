@@ -13,6 +13,8 @@ struct Node
 // prototype for BuildDistinctMirrorPairs of Assignment 5 Part 1
 // (see assignment description for the function's specification)
 
+void BuildDistinctMirrorPairs (Node*& head);
+
 
 ////////////////////////////////////////////////////////////////////
 // prototypes for 11 functions (for use by Assign05P1.cpp ONLY)

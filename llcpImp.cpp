@@ -6,12 +6,118 @@ using namespace std;
 
 // definition of BuildDistinctMirrorPairs of Assignment 5 Part 1
 // ( ***** put at near top to facilitate printing and marking ***** )
-// by (to help ID your code): <YOUR NAME HERE>
+// by (to help ID your code): <CADEN SPRAGUE>
 
-< your code for BuildDistinctMirrorPairs goes here >
+void BuildDistinctMirrorPairs (Node*& head)
+{
+   if (head == 0) return;  // Empty list, nothing to do
 
+   Node* current = head;
+   Node* duplicates = 0;
+   
+   // Step 1: Remove duplicates
+   while (current != 0) 
+   {
+      Node* runner = current;
 
+      // Check all subsequent nodes for duplicates
+      while (runner->link != 0) 
+      {
+         if (runner->link->data == current->data) 
+         {
+            // Duplicate found 
+            Node* theDuplicate = runner->link;
 
+            // remove it from head list 
+            runner->link = runner->link->link;
+
+            // checking if duplicates ( recycle bin ) containts theDuplicate->data
+            Node* duplicatesIterator = duplicates;
+            while(duplicatesIterator != 0)
+            {
+               if(duplicatesIterator->data == theDuplicate->data)
+               {
+                  break;
+               }
+               else
+               {
+                  duplicatesIterator = duplicatesIterator->link;
+               }
+            }
+
+            if (duplicatesIterator != 0) {
+               // add to duplicates list
+               theDuplicate->link = duplicates;
+               duplicates = theDuplicate; 
+            }
+            else {
+               // or trash it
+               delete theDuplicate;
+            }
+
+         } 
+         else 
+         {
+            runner = runner->link;
+         }
+      }
+      current = current->link;
+   }
+
+   // Step 2: mirror section
+
+   int headLength = 1;
+   Node* last = head;      
+
+   while(last->link != 0)
+   {
+      headLength++;
+      last = last->link;
+   }
+
+   // head length is the length of LL (without any mirror stuff)
+   // last = the original last node of LL (without any mirror stuff)
+
+   // iterate thru LL in reverse order
+   for (int i = headLength-1; i >= 0; i--) 
+   {
+      Node* runner = head;
+      
+      // traverse LL
+      for( int j = 0; j < i; j++)
+      {
+         runner = runner->link;
+      }
+
+      // runner = the node we are wanting to copy in mirror section
+
+      // duplicates is basically a recycle bin now that we are checking to see if we can steal from
+      // if duplicates is empty or duplicates contain the data we are looking for
+      if(duplicates != 0 && duplicates->data == runner->data)
+      {
+         // set the last node of LL to duplicate and reset last = to duplicate
+         last->link = duplicates;
+         last = last -> link;
+
+         // remove duplicate from "recycle bin"
+         duplicates = duplicates->link;
+
+         last->link = 0;
+      }
+      // if recycle bin does not contain runner->data
+      else 
+      {
+         // make new node
+         Node* newNode = new Node;
+         newNode->data = runner->data;
+         newNode->link = 0;
+
+         // set last = newNode and increment last
+         last->link = newNode;
+         last = last->link;
+      }
+   }
+}
 
 
 //////////////////////////////////////////////////////////////////
